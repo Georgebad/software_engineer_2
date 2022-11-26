@@ -1,6 +1,9 @@
 package incometaxcalculator.data.management;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import incometaxcalculator.exceptions.WrongReceiptKindException;
 
@@ -12,12 +15,10 @@ public abstract class Taxpayer {
   private float amountPerReceiptsKind[] = new float[5];
   private int totalReceiptsGathered = 0;
   private HashMap<Integer, Receipt> receiptHashMap = new HashMap<Integer, Receipt>(0);
-  private static final short ENTERTAINMENT = 0;
-  private static final short BASIC = 1;
-  private static final short TRAVEL = 2;
-  private static final short HEALTH = 3;
-  private static final short OTHER = 4;
 
+  private final List<String> types = Arrays.asList("Entertainment","Basic","Travel","Health","Other");
+  private final List<Double> variation1 = Arrays.asList(0.2,0.4,0.6);
+  private final List<Double> variation2 = Arrays.asList(0.08,0.04,0.15,0.3);
   public abstract double calculateBasicTax();
 
   protected Taxpayer(String fullname, int taxRegistrationNumber, float income) {
@@ -27,17 +28,14 @@ public abstract class Taxpayer {
   }
 
   public void addReceipt(Receipt receipt) throws WrongReceiptKindException {
-    if (receipt.getKind().equals("Entertainment")) {
-      amountPerReceiptsKind[ENTERTAINMENT] += receipt.getAmount();
-    } else if (receipt.getKind().equals("Basic")) {
-      amountPerReceiptsKind[BASIC] += receipt.getAmount();
-    } else if (receipt.getKind().equals("Travel")) {
-      amountPerReceiptsKind[TRAVEL] += receipt.getAmount();
-    } else if (receipt.getKind().equals("Health")) {
-      amountPerReceiptsKind[HEALTH] += receipt.getAmount();
-    } else if (receipt.getKind().equals("Other")) {
-      amountPerReceiptsKind[OTHER] += receipt.getAmount();
-    } else {
+    int check=0;
+    for (int i = 0; i < types.size(); i++){
+      if (types.get(i).equals((receipt.getKind()))){
+        amountPerReceiptsKind[i] += receipt.getAmount();
+        check=1;
+      }
+    }
+    if(check!=0) {
       throw new WrongReceiptKindException();
     }
     receiptHashMap.put(receipt.getId(), receipt);
@@ -46,17 +44,14 @@ public abstract class Taxpayer {
 
   public void removeReceipt(int receiptId) throws WrongReceiptKindException {
     Receipt receipt = receiptHashMap.get(receiptId);
-    if (receipt.getKind().equals("Entertainment")) {
-      amountPerReceiptsKind[ENTERTAINMENT] -= receipt.getAmount();
-    } else if (receipt.getKind().equals("Basic")) {
-      amountPerReceiptsKind[BASIC] -= receipt.getAmount();
-    } else if (receipt.getKind().equals("Travel")) {
-      amountPerReceiptsKind[TRAVEL] -= receipt.getAmount();
-    } else if (receipt.getKind().equals("Health")) {
-      amountPerReceiptsKind[HEALTH] -= receipt.getAmount();
-    } else if (receipt.getKind().equals("Other")) {
-      amountPerReceiptsKind[OTHER] -= receipt.getAmount();
-    } else {
+    int check=0;
+    for (int i = 0; i < types.size(); i++){
+      if (types.get(i).equals((receipt.getKind()))){
+        amountPerReceiptsKind[i] -= receipt.getAmount();
+        check=1;
+      }
+    }
+    if(check!=0) {
       throw new WrongReceiptKindException();
     }
     totalReceiptsGathered--;
@@ -81,15 +76,12 @@ public abstract class Taxpayer {
 
   public double getVariationTaxOnReceipts() {
     float totalAmountOfReceipts = getTotalAmountOfReceipts();
-    if (totalAmountOfReceipts < 0.2 * income) {
-      return calculateBasicTax() * 0.08;
-    } else if (totalAmountOfReceipts < 0.4 * income) {
-      return calculateBasicTax() * 0.04;
-    } else if (totalAmountOfReceipts < 0.6 * income) {
-      return -calculateBasicTax() * 0.15;
-    } else {
-      return -calculateBasicTax() * 0.3;
+    for(int i=0; i < variation1.size(); i++){
+      if (totalAmountOfReceipts < variation1.get(i) * income) {
+        return calculateBasicTax() * variation2.get(i);
+      }
     }
+    return -calculateBasicTax() * variation2.get(-1);
   }
 
   private float getTotalAmountOfReceipts() {
