@@ -52,7 +52,7 @@ public abstract class Taxpayer {
         check=1;
       }
     }
-    if(check!=0) {
+    if(check==0) {
       throw new WrongReceiptKindException();
     }
     receiptHashMap.put(receipt.getId(), receipt);
@@ -68,7 +68,7 @@ public abstract class Taxpayer {
         check=1;
       }
     }
-    if(check!=0) {
+    if(check==0) {
       throw new WrongReceiptKindException();
     }
     totalReceiptsGathered--;
