@@ -12,6 +12,9 @@ public abstract class Taxpayer {
   protected final String fullname;
   protected final int taxRegistrationNumber;
   protected final float income;
+
+  protected final List<Integer> calculateInput;
+  protected final List<Double> calculateOutput;
   private float amountPerReceiptsKind[] = new float[5];
   private int totalReceiptsGathered = 0;
   private HashMap<Integer, Receipt> receiptHashMap = new HashMap<Integer, Receipt>(0);
@@ -19,14 +22,28 @@ public abstract class Taxpayer {
   private final List<String> types = Arrays.asList("Entertainment","Basic","Travel","Health","Other");
   private final List<Double> variation1 = Arrays.asList(0.2,0.4,0.6);
   private final List<Double> variation2 = Arrays.asList(0.08,0.04,0.15,0.3);
-  public abstract double calculateBasicTax();
 
-  protected Taxpayer(String fullname, int taxRegistrationNumber, float income) {
+
+  protected Taxpayer(String fullname, int taxRegistrationNumber, float income,List<Integer> calculateInput, List<Double> calculateOutput) {
     this.fullname = fullname;
     this.taxRegistrationNumber = taxRegistrationNumber;
     this.income = income;
+    this.calculateInput = calculateInput;
+    this.calculateOutput = calculateOutput;
   }
-
+  public double calculateBasicTax() {
+    if (income < calculateInput.get(0)) {
+      return calculateOutput.get(0) * income;
+    } else if (income < calculateInput.get(1)) {
+      return calculateOutput.get(1) + calculateOutput.get(2) * (income - calculateInput.get(0));
+    } else if (income < calculateInput.get(2)) {
+      return calculateOutput.get(3) + calculateOutput.get(4) * (income - calculateInput.get(1));
+    } else if (income < calculateInput.get(3)) {
+      return calculateOutput.get(5) + calculateOutput.get(6) * (income - calculateInput.get(2));
+    } else {
+      return calculateOutput.get(7) + calculateOutput.get(8) * (income - calculateInput.get(3));
+    }
+  }
   public void addReceipt(Receipt receipt) throws WrongReceiptKindException {
     int check=0;
     for (int i = 0; i < types.size(); i++){

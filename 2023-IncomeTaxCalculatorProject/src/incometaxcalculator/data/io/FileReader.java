@@ -37,8 +37,8 @@ public abstract class FileReader {
     createTaxpayer(fullname, taxRegistrationNumber, income, status);
     while (readReceipt(inputStream, taxRegistrationNumber))
       ;
-  }
 
+  }
   protected boolean readReceipt(BufferedReader inputStream, int taxRegistrationNumber)
       throws WrongFileFormatException, IOException, WrongReceiptKindException,
       WrongReceiptDateException {
