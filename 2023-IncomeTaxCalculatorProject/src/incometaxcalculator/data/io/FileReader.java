@@ -11,11 +11,8 @@ import incometaxcalculator.exceptions.WrongTaxpayerStatusException;
 
 public abstract class FileReader {
 
-  protected abstract int checkForReceipt(BufferedReader inputStream)
-      throws NumberFormatException, IOException;
-
   protected abstract String getValueOfField(String fieldsLine) throws WrongFileFormatException;
-  
+  protected abstract int validation(String values[]);
   /**
    * 
    * @throws NumberFormatException 
@@ -25,6 +22,19 @@ public abstract class FileReader {
    * @throws WrongReceiptKindException
    * @throws WrongReceiptDateException
    */
+  public int checkForReceipt(BufferedReader inputStream)
+      throws NumberFormatException, IOException {
+    String line;
+    int result = 0;
+    while (!isEmpty(line = inputStream.readLine())) {
+      String values[] = line.split(" ", 3);
+      result = validation(values);
+      if (result != -1){
+        return result;
+      }
+    }
+    return result;
+  }
   public void readFile(String fileName)
       throws NumberFormatException, IOException, WrongTaxpayerStatusException,
       WrongFileFormatException, WrongReceiptKindException, WrongReceiptDateException {
