@@ -2,33 +2,34 @@ package incometaxcalculator.data.io;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import incometaxcalculator.data.management.Receipt;
 import incometaxcalculator.data.management.TaxpayerManager;
 
 public class XMLInfoWriter extends InfoWriter {
+    public List<String> textFormatFile(){
+        String name="<Name> %s </Name>";
+        String afm="<AFM> %s </AFM>";
+        String status="<Status> %s </Status>";
+        String income="<Income> %s </Income>";
+        String receipts="<Receipts>";
 
-  public void generateFIlePrints(TaxpayerManager manager,int taxRegistrationNumber,PrintWriter outputStream){
-    outputStream.println("<Name> " + manager.getTaxpayerName(taxRegistrationNumber) + " </Name>");
-    outputStream.println("<AFM> " + taxRegistrationNumber + " </AFM>");
-    outputStream.println("<Status> " + manager.getTaxpayerStatus(taxRegistrationNumber) + " </Status>");
-    outputStream.println("<Income> " + manager.getTaxpayerIncome(taxRegistrationNumber) + " </Income>");
-    outputStream.println();
-    outputStream.println("<Receipts>");
-  }
-
-  public void generateTaxpayerPrints(Receipt receipt,PrintWriter outputStream){
-      outputStream.println("<ReceiptID> " + getReceiptId(receipt) + " </ReceiptID>");
-      outputStream.println("<Date> " + getReceiptIssueDate(receipt) + " </Date>");
-      outputStream.println("<Kind> " + getReceiptKind(receipt) + " </Kind>");
-      outputStream.println("<Amount> " + getReceiptAmount(receipt) + " </Amount>");
-      outputStream.println("<Company> " + getCompanyName(receipt) + " </Company>");
-      outputStream.println("<Country> " + getCompanyCountry(receipt) + " </Country>");
-      outputStream.println("<City> " + getCompanyCity(receipt) + " </City>");
-      outputStream.println("<Street> " + getCompanyStreet(receipt) + " </Street>");
-      outputStream.println("<Number> " + getCompanyNumber(receipt) + " </Number>");
-      outputStream.println();
-  }
+        return Arrays.asList(name,afm,status,income,receipts);
+    }
+    public List<String> textFormatReceipt(){
+        String id="<ReceiptID> %s </ReceiptID>";
+        String date="<Date> %s </Date>";
+        String kind="<Kind> %s </Kind>";
+        String amount="<Amount> %s </Amount>";
+        String company="<Company> %s </Company>";
+        String country="<Country> %s </Country>";
+        String city="<City> %s </City>";
+        String street="<Street> %s </Street>";
+        String number="<Number> %s </Number>";
+        return Arrays.asList(id,date,kind,amount,company,country,city,street,number);
+    }
 }

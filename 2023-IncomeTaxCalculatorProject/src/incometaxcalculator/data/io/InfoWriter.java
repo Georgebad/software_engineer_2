@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public abstract class InfoWriter implements FileWriter {
@@ -15,7 +16,13 @@ public abstract class InfoWriter implements FileWriter {
         PrintWriter outputStream = new PrintWriter(
                 new java.io.FileWriter(taxRegistrationNumber + "_INFO.txt"));
         TaxpayerManager manager = new TaxpayerManager();
-        generateFIlePrints(manager,taxRegistrationNumber,outputStream);
+        List<String> mylist = textFormatFile();
+        outputStream.println(String.format(mylist.get(0),manager.getTaxpayerName(taxRegistrationNumber)));
+        outputStream.println(String.format(mylist.get(1),taxRegistrationNumber));
+        outputStream.println(String.format(mylist.get(2),manager.getTaxpayerStatus(taxRegistrationNumber)));
+        outputStream.println(String.format(mylist.get(3),manager.getTaxpayerIncome(taxRegistrationNumber)));
+        outputStream.println();
+        outputStream.println(mylist.get(4));
         outputStream.println();
         generateTaxpayerReceipts(taxRegistrationNumber, outputStream);
         outputStream.close();
@@ -29,11 +36,21 @@ public abstract class InfoWriter implements FileWriter {
         while (iterator.hasNext()) {
             HashMap.Entry<Integer, Receipt> entry = iterator.next();
             Receipt receipt = entry.getValue();
-            generateTaxpayerPrints(receipt,outputStream);
+            List<String> mylist = textFormatReceipt();
+            outputStream.println(String.format(mylist.get(0),getReceiptId(receipt)));
+            outputStream.println(String.format(mylist.get(1),getReceiptIssueDate(receipt)));
+            outputStream.println(String.format(mylist.get(2),getReceiptKind(receipt)));
+            outputStream.println(String.format(mylist.get(3),getReceiptAmount(receipt)));
+            outputStream.println(String.format(mylist.get(4),getCompanyName(receipt)));
+            outputStream.println(String.format(mylist.get(5),getCompanyCountry(receipt)));
+            outputStream.println(String.format(mylist.get(6),getCompanyCity(receipt)));
+            outputStream.println(String.format(mylist.get(7),getCompanyStreet(receipt)));
+            outputStream.println(String.format(mylist.get(8),getCompanyNumber(receipt)));
+            outputStream.println();
         }
     }
-    public abstract void generateFIlePrints(TaxpayerManager manager,int taxRegistrationNumber,PrintWriter outputStream);
-    public abstract void generateTaxpayerPrints(Receipt receipt,PrintWriter outputStream);
+    public abstract List<String> textFormatFile();
+    public abstract List<String> textFormatReceipt();
 
     public int getReceiptId(Receipt receipt) {
         return receipt.getId();

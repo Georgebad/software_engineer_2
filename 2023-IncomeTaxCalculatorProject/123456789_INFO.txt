@@ -3,7 +3,7 @@ AFM: 123456789
 Status: Married Filing Jointly
 Income: 22570.0
 
-Receipts:
+Receipts: %s
 
 Receipt ID: 1
 Date: 10/5/1996
