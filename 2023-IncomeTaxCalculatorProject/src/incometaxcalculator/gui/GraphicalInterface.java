@@ -6,24 +6,10 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import incometaxcalculator.data.management.TaxpayerManager;
@@ -39,7 +25,7 @@ public class GraphicalInterface extends JFrame {
   private TaxpayerManager taxpayerManager = new TaxpayerManager();
   private String taxpayersTRN = new String();
   private JTextField txtTaxRegistrationNumber;
-
+  private String hoveredLabel;
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       public void run() {
@@ -104,7 +90,7 @@ public class GraphicalInterface extends JFrame {
     boxPanel.add(xmlBox, BorderLayout.EAST);
 
     DefaultListModel<String> taxRegisterNumberModel = new DefaultListModel<String>();
-
+    JButton button_1 = new JButton("Delete");
     JList<String> taxRegisterNumberList = new JList<String>(taxRegisterNumberModel);
     taxRegisterNumberList.setBackground(new Color(153, 204, 204));
     taxRegisterNumberList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -115,7 +101,43 @@ public class GraphicalInterface extends JFrame {
     taxRegisterNumberListScrollPane.setSize(300, 300);
     taxRegisterNumberListScrollPane.setLocation(70, 100);
     contentPane.add(taxRegisterNumberListScrollPane);
-
+    MouseListener mouseListenerSelect = new MouseAdapter() {
+      public void mouseClicked(MouseEvent mouseEvent) {
+        JList theList = (JList) mouseEvent.getSource();
+        if (mouseEvent.getClickCount() == 1) {
+          int index1 = theList.locationToIndex(mouseEvent.getPoint());
+          if (index1 >= 0) {
+            Object o = theList.getModel().getElementAt(index1);
+            hoveredLabel = o.toString();
+          }
+        }
+        if (SwingUtilities.isLeftMouseButton(mouseEvent) && mouseEvent.getClickCount() == 2) {
+          int index = theList.locationToIndex(mouseEvent.getPoint());
+          if (index >= 0) {
+            Object o = theList.getModel().getElementAt(index);
+            String trn  =o.toString();
+            int taxRegistrationNumber = Integer.parseInt(trn);
+            TaxpayerData taxpayerData = new TaxpayerData(taxRegistrationNumber,
+                    taxpayerManager);
+            taxpayerData.setVisible(true);
+          }
+        }
+      }
+    };
+    KeyListener keylistener = new KeyAdapter() {
+      public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_DELETE) {
+          if (hoveredLabel != null){
+            String trn = hoveredLabel;
+            int taxRegistrationNumber = Integer.parseInt(trn);
+            taxpayerManager.removeTaxpayer(taxRegistrationNumber);
+            taxRegisterNumberModel.removeElement(trn);
+          }
+        }
+      }
+    };
+    taxRegisterNumberList.addMouseListener(mouseListenerSelect);
+    taxRegisterNumberList.addKeyListener(keylistener);
     JButton btnLoadTaxpayer = new JButton("Load Taxpayer");
     btnLoadTaxpayer.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {

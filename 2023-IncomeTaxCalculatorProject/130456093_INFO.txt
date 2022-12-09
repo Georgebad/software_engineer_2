@@ -2,7 +2,9 @@ Name: Apostolos Zarras
 AFM: 130456093
 Status: Married Filing Jointly
 Income: 22570.0
-Receipts:
+
+Receipts: %s
+
 Receipt ID: 1
 Date: 25/2/2014
 Kind: Basic
@@ -12,6 +14,7 @@ Country: Greece
 City: Ioannina
 Street: Kaloudi 
 Number: 10
+
 Receipt ID: 2
 Date: 28/2/2014
 Kind: Entertainment
@@ -21,6 +24,7 @@ Country: Greece
 City: Ioannina
 Street: Kavafi
 Number: 4
+
 Receipt ID: 3
 Date: 10/3/2014
 Kind: Health
@@ -30,6 +34,7 @@ Country: Greece
 City: Ioannina
 Street: Lamprou
 Number: 20
+
 Receipt ID: 4
 Date: 3/5/2014
 Kind: Other
@@ -39,6 +44,7 @@ Country: Greece
 City: Ioannina
 Street: Vlahlidou
 Number: 20
+
 Receipt ID: 5
 Date: 3/5/2014
 Kind: Other
