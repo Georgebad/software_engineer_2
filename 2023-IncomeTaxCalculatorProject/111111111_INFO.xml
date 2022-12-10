@@ -1,0 +1,27 @@
+<Name> tester </Name>
+<AFM> 111111111 </AFM>
+<Status> Married Filing Jointly </Status>
+<Income> 1000.0 </Income>
+
+<Receipts>
+
+<ReceiptID> 1 </ReceiptID>
+<Date> 1/2/3 </Date>
+<Kind> Other </Kind>
+<Amount> 150.0 </Amount>
+<Company> IOA </Company>
+<Country> Greece </Country>
+<City> Ioannina </City>
+<Street> Dodoni </Street>
+<Number> 1 </Number>
+
+<ReceiptID> 2 </ReceiptID>
+<Date> 2/2/3 </Date>
+<Kind> Other </Kind>
+<Amount> 150.0 </Amount>
+<Company> IOA </Company>
+<Country> Greece </Country>
+<City> Ioannina </City>
+<Street> Dodoni </Street>
+<Number> 1 </Number>
+

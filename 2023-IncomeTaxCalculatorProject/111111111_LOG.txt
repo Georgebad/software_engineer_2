@@ -1,0 +1,12 @@
+Name: tester
+AFM: 111111111
+Income: 1000.0
+Basic Tax: 53.5
+Tax Increase: 2.14
+Total Tax: 55.64
+TotalReceiptsGathered: 2
+Entertainment: 
+Basic: 0.0
+Travel: 0.0
+Health: 0.0
+Other: 300.0

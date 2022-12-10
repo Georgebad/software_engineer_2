@@ -8,6 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class XMLLogWriter extends LogWriter {
+  public PrintWriter createLogWriter(int taxRegistrationNumber) throws IOException{
+    PrintWriter outputStream = new PrintWriter(
+            new java.io.FileWriter(taxRegistrationNumber + "_LOG.xml"));
+    return outputStream;
+  }
   public List<String> textFormat() {
     String name="<Name> %s </Name>";
     String afm="<AFM> %s </AFM>";

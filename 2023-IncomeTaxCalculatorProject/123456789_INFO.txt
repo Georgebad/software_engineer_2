@@ -55,3 +55,23 @@ City: wer
 Street: wer
 Number: 4
 
+Receipt ID: 7
+Date: 1/2/3
+Kind: Other
+Amount: 100.0
+Company: sdf
+Country: gs
+City: gds
+Street: gsd
+Number: 1
+
+Receipt ID: 9
+Date: 1/1/1
+Kind: Other
+Amount: 150.0
+Company: dfk
+Country: wahh
+City: ejej
+Street: edj
+Number: 1
+

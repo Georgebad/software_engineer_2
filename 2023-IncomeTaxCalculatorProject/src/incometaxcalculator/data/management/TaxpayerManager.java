@@ -105,10 +105,6 @@ public class TaxpayerManager {
 
   }
 
-  public Taxpayer getTaxpayer(int taxRegistrationNumber) {
-    return taxpayerHashMap.get(taxRegistrationNumber);
-  }
-
   public void loadTaxpayer(String fileName)
       throws NumberFormatException, IOException, WrongFileFormatException, WrongFileEndingException,
       WrongTaxpayerStatusException, WrongReceiptKindException, WrongReceiptDateException {

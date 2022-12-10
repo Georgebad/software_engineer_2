@@ -13,10 +13,10 @@ import java.util.Map;
 public abstract class InfoWriter implements FileWriter {
     public void generateFile(int taxRegistrationNumber) throws IOException {
 
-        PrintWriter outputStream = new PrintWriter(
-                new java.io.FileWriter(taxRegistrationNumber + "_INFO.txt"));
+
         TaxpayerManager manager = new TaxpayerManager();
         List<String> mylist = textFormatFile();
+        PrintWriter outputStream = createWriter(taxRegistrationNumber);
         outputStream.println(String.format(mylist.get(0),manager.getTaxpayerName(taxRegistrationNumber)));
         outputStream.println(String.format(mylist.get(1),taxRegistrationNumber));
         outputStream.println(String.format(mylist.get(2),manager.getTaxpayerStatus(taxRegistrationNumber)));
@@ -51,6 +51,8 @@ public abstract class InfoWriter implements FileWriter {
     }
     public abstract List<String> textFormatFile();
     public abstract List<String> textFormatReceipt();
+
+    public abstract PrintWriter createWriter(int taxRegistrationNumber) throws IOException;
 
     public int getReceiptId(Receipt receipt) {
         return receipt.getId();

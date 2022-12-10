@@ -14,11 +14,10 @@ public abstract class LogWriter implements FileWriter{
     private static final short OTHER = 4;
 
     public void generateFile(int taxRegistrationNumber) throws IOException {
-        PrintWriter outputStream = new PrintWriter(
-                new java.io.FileWriter(taxRegistrationNumber + "_LOG.txt"));
 
         TaxpayerManager manager = new TaxpayerManager();
         List<String> mylist = textFormat();
+        PrintWriter outputStream = createLogWriter(taxRegistrationNumber);
         outputStream.println(String.format(mylist.get(0),manager.getTaxpayerName(taxRegistrationNumber)));
         outputStream.println(String.format(mylist.get(1),taxRegistrationNumber));
         outputStream.println(String.format(mylist.get(2),manager.getTaxpayerIncome(taxRegistrationNumber)));
@@ -44,4 +43,5 @@ public abstract class LogWriter implements FileWriter{
         outputStream.close();
     }
     public abstract List<String> textFormat();
+    public abstract PrintWriter createLogWriter(int taxRegistrationNumber)throws IOException;
 }

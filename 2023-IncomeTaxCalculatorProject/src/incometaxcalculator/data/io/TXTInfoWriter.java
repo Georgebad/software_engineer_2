@@ -11,6 +11,11 @@ import incometaxcalculator.data.management.Receipt;
 import incometaxcalculator.data.management.TaxpayerManager;
 
 public class TXTInfoWriter extends InfoWriter {
+    public PrintWriter createWriter(int taxRegistrationNumber) throws IOException{
+        PrintWriter outputStream = new PrintWriter(
+                new java.io.FileWriter(taxRegistrationNumber + "_INFO.txt"));
+        return outputStream;
+    }
     public List<String> textFormatFile(){
         String name="Name: %s";
         String afm="AFM: %s";

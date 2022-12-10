@@ -1,0 +1,27 @@
+Name: tester
+AFM: 111111111
+Status: Married Filing Jointly
+Income: 1000.0
+
+Receipts: %s
+
+Receipt ID: 1
+Date: 1/2/3
+Kind: Other
+Amount: 150.0
+Company: IOA
+Country: Greece
+City: Ioannina
+Street: Dodoni
+Number: 1
+
+Receipt ID: 2
+Date: 2/2/3
+Kind: Other
+Amount: 150.0
+Company: IOA
+Country: Greece
+City: Ioannina
+Street: Dodoni
+Number: 1
+
